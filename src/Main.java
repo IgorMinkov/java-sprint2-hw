@@ -30,13 +30,13 @@ public class Main {
             } else if (intUserInput == 2) {
                 yearReport = yearlyEngine.readYearReport();
             } else if (intUserInput == 3) {
-                System.out.println("выполняется 3 - Сверить месячные отчёты с годовым");
+                System.out.println("выполняется функция 3 - Сверить месячные отчёты с годовым");
                 reportCheckEngine.monthsToYearCheck(monthsData, yearReport);
             } else if (intUserInput == 4) {
-                System.out.println("выполняется 4 - Вывести информацию всех месячных отчётов");
+                System.out.println("выполняется функция 4 - Вывести информацию всех месячных отчётов");
                 monthlyEngine.getMonthsStatistic(monthsData);
             } else if (intUserInput == 5) {
-                System.out.println("выполняется 5 - Вывести информацию годового отчёта");
+                System.out.println("выполняется функция 5 - Вывести информацию годового отчёта");
                 yearlyEngine.getYearStatistic(yearReport);
             }
             else if (intUserInput == 916) {

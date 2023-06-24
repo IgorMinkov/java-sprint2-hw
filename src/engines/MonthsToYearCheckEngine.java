@@ -12,11 +12,16 @@ public class MonthsToYearCheckEngine {
     public void monthsToYearCheck(HashMap<String, MonthlyReport> monthsData, YearlyReport yearReport) {
 
         if (monthsData == null) {
-            System.out.println("месяный отчет не считан");
+            System.out.println("месячные отчеты не считан");
+            System.out.println("Сначала считайте их командой 1");
+            return;
         }
 
         if (yearReport == null) {
             System.out.println("Годовой отчет не считан");
+            System.out.println("Сначала считайте его командой 2");
+            return;
+
         }
 
         //Подсчитать суммы доходов и расходов по каждому из месяцев.
@@ -28,30 +33,32 @@ public class MonthsToYearCheckEngine {
         //При обнаружении несоответствия программа должна вывести месяц, где оно обнаружено.
         //Если несоответствий не обнаружено, приложение должно вывести только информацию об успешном завершении операции.
     }
-    
-    public void getTotalPerMonth(YearlyReport yearReport) { // считает доходы и расходы по каждому месяцу
 
-        HashMap<Integer, Integer> profitPerMonths = new HashMap<>();
+    public void getTotalPerMonth(YearlyReport yearReport) { // доходы и расходы за год разносит на две мапы
 
-        System.out.println("Данные за 2021 год:");
+        HashMap<Integer, Integer> expensesPerMonths = new HashMap<>();
+        HashMap<Integer, Integer> incomesPerMonths = new HashMap<>();
+
         for (int i = 0; i < yearReport.yearsData.size(); i++) {
             YearTransaction yearTransaction = yearReport.yearsData.get(i);
-            Integer profitPerMonth = profitPerMonths.get(yearTransaction.amount);
-            if (profitPerMonth == null) {
-                profitPerMonth = 0;
-            }
             if (yearTransaction.isExpense) {
-                profitPerMonth -= yearTransaction.amount;
+                Integer expensePerMonth = expensesPerMonths.get(yearTransaction.amount);
+                if (expensePerMonth == null) {
+                    expensePerMonth = 0;
+                }
+                expensesPerMonths.put(yearTransaction.month, expensePerMonth);
             } else {
-                profitPerMonth += yearTransaction.amount;
+                Integer incomePerMonth = incomesPerMonths.get(yearTransaction.amount);
+                if (incomePerMonth == null) {
+                    incomePerMonth = 0;
+                }
+                incomesPerMonths.put(yearTransaction.month, incomePerMonth);
             }
-            profitPerMonths.put(yearTransaction.month, profitPerMonth);
         }
 
-        for (Integer month : profitPerMonths.keySet()) {
-            String monthName = getMonthName(month);
-            System.out.println("Прибыль за " + monthName + ": " + profitPerMonths.get(month));
-        }
+        //for (Integer month : profitPerMonths.keySet()) {
+        //    String monthName = getMonthName(month);
+        //    System.out.println("Прибыль за " + monthName + ": " + profitPerMonths.get(month));}
     }
 
 
@@ -60,5 +67,7 @@ public class MonthsToYearCheckEngine {
                 "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         return months[i - 1];
     }
+
+
 
 }

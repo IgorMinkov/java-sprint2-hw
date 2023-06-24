@@ -35,7 +35,9 @@ public class YearReportEngine {
     public void getYearStatistic(YearlyReport yearReport) {
 
         if (yearReport == null) {
-            System.out.println("Годовой отчет не считан");
+            System.out.println("Годовой отчет не считан.");
+            System.out.println("Сначала считайте его командой 2");
+            return;
         }
         calculateProfit(yearReport);
         calculateAverage(yearReport);
@@ -73,7 +75,7 @@ public class YearReportEngine {
         return months[i - 1];
     }
 
-    public void calculateAverage(YearlyReport yearReport) { // средний доход и средний расход за все операции
+    public void calculateAverage(YearlyReport yearReport) { // средний доход и средний расход за год
 
         ArrayList<Integer> expenses = new ArrayList<>();
         ArrayList<Integer> incomes = new ArrayList<>();
@@ -88,18 +90,18 @@ public class YearReportEngine {
         }
 
         int expenseSum = 0;
-        for (int i : expenses) {
-            expenseSum += expenses.get(i);
+        for (int expense : expenses) {
+            expenseSum += expense;
         }
         int averageExpense = expenseSum / expenses.size();
-        System.out.println("средний расход за месяц" + averageExpense);
+        System.out.println("средний расход за год: " + averageExpense);
 
         int incomeSum = 0;
-        for (int i : incomes) {
-            incomeSum += incomes.get(i);
+        for (int income : incomes) {
+            incomeSum += income;
         }
         int averageIncome = incomeSum / incomes.size();
-        System.out.println("средний доход за месяц" + averageIncome);
+        System.out.println("средний доход за год: " + averageIncome);
     }
 
 }

@@ -53,7 +53,7 @@ public class MonthlyReportEngine {
                 "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
         return months[i - 1];
     }
-    public String getMonthIndex (int i) {       // Получить номер месяца для цикла
+    public String getMonthIndex (int i) {       // Получить номер месяца для считывания месячных отчетов
         String[] months = {"01", "02", "03", "04", "05", "06",
                 "07", "08", "09", "10", "11", "12"};
         return months[i - 1];
@@ -62,9 +62,12 @@ public class MonthlyReportEngine {
 
 
     public void getMonthsStatistic (HashMap<String, MonthlyReport> monthsData) {
+        // верно отдает, сумму на считает в выводе
 
         if (monthsData == null) {
-            System.out.println("месяный отчет не считан");
+            System.out.println("месячные отчеты не считаны.");
+            System.out.println("Сначала считайте их командой 1");
+            return;
         }
 
         for (String monthName : monthsData.keySet()) {
@@ -85,7 +88,8 @@ public class MonthlyReportEngine {
                         maxExpense = line.quantity * line.PriceOfOne;
                         lowProduct = line.name;
                         lowProductSum = line.PriceOfOne;
-                    } else {
+                    }
+                } else {
                         if (topProduct == null) {
                             topProduct = line.name;
                             continue;
@@ -96,7 +100,6 @@ public class MonthlyReportEngine {
                             topProductSum = line.PriceOfOne;
                         }
                     }
-                }
             }
             System.out.println("Самый прибыльный товар: " + topProduct + ", продано на сумму: " + topProductSum);
             System.out.println("Самая большая трата: " + lowProduct + ", потрачено: " + lowProductSum);
@@ -104,13 +107,38 @@ public class MonthlyReportEngine {
 
     }
 
-    public void calculateMonthsIncomeSum () {
+    public int calculateMonthsIncomeSum (MonthlyReport monthlyReport) {
 
+        if (monthlyReport == null) {
+            System.out.println("месячный отчет пустой");
+            return 0;
+        }
+
+            int monthIncomeSum = 0;
+            for (MonthTransaction line : monthlyReport.monthData) {
+                if (!line.isExpense) {
+                    int lineIncome = line.quantity * line.PriceOfOne;
+                    monthIncomeSum += lineIncome;
+                }
+            }
+            return monthIncomeSum;
 
     }
+    public int calculateMonthsExpenseSum (MonthlyReport monthlyReport) {
 
-    public void calculateMonthsExpenseSum () {
+        if (monthlyReport == null) {
+            System.out.println("месячный отчет пустой");
+            return 0;
+        }
 
+            int monthExpenseSum = 0;
+            for (MonthTransaction line : monthlyReport.monthData) {
+                if (line.isExpense) {
+                    int lineIncome = line.quantity * line.PriceOfOne;
+                    monthExpenseSum += lineIncome;
+                }
+            }
+            return monthExpenseSum;
 
     }
 
