@@ -6,5 +6,4 @@ public class YearlyReport {
 
     public ArrayList<YearTransaction> yearsData = new ArrayList<>();
 
-    //public int year;
 }

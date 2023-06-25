@@ -17,7 +17,7 @@ public class Main {
         HashMap<String,MonthlyReport> monthsData = null;
         YearlyReport yearReport = null;
 
-        System.out.println("\n"); // просто пустая строка для отделения в консоли от технической инфы.
+        System.out.println("\n"); // пустая строка для отделения в консоли от технической инфы.
         System.out.println("Приложение для бухгалтерии v1.0");
 
         while (true) {
@@ -30,13 +30,10 @@ public class Main {
             } else if (intUserInput == 2) {
                 yearReport = yearlyEngine.readYearReport();
             } else if (intUserInput == 3) {
-                System.out.println("выполняется функция 3 - Сверить месячные отчёты с годовым");
                 reportCheckEngine.monthsToYearCheck(monthsData, yearReport);
             } else if (intUserInput == 4) {
-                System.out.println("выполняется функция 4 - Вывести информацию всех месячных отчётов");
                 monthlyEngine.getMonthsStatistic(monthsData);
             } else if (intUserInput == 5) {
-                System.out.println("выполняется функция 5 - Вывести информацию годового отчёта");
                 yearlyEngine.getYearStatistic(yearReport);
             }
             else if (intUserInput == 916) {
@@ -50,7 +47,7 @@ public class Main {
     }
 
     static void printMenu() {
-        System.out.println(); // просто пустая строка для отделения меню от результатов
+        System.out.println(); // пустая строка для отделения меню от результатов
         System.out.println("Доступные функции:");
         System.out.println("1 - Считать все месячные отчёты");
         System.out.println("2 - Считать годовой отчёт");

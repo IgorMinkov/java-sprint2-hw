@@ -17,7 +17,7 @@ public class MonthlyReportEngine {
         String delimiter = ",";
         HashMap<String,MonthlyReport> monthlyReports = new HashMap<>();
 
-        for (int i = 1; i<=12; i++) {
+        for (int i = 1; i <= 3; i++) {
             String filename = filePrefix + "m.2021" + getMonthIndex(i) + ".csv";
             ArrayList<String> strings = fileReader.readFileContents(filename);
             if (strings.isEmpty()) {
@@ -73,10 +73,8 @@ public class MonthlyReportEngine {
         for (String monthName : monthsData.keySet()) {
             int maxIncome = 0;
             String topProduct = null;
-            int topProductSum = 0;
             int maxExpense = 0;
             String lowProduct = null;
-            int lowProductSum = 0;
             System.out.println("Данные за " + monthName + ":");
             for (MonthTransaction line : monthsData.get(monthName).monthData) {
                 if (line.isExpense) {
@@ -84,25 +82,23 @@ public class MonthlyReportEngine {
                         lowProduct = line.name;
                         continue;
                     }
-                    if (maxExpense < line.quantity * line.PriceOfOne) {
-                        maxExpense = line.quantity * line.PriceOfOne;
+                    if (maxExpense < line.quantity * line.unitPrice) {
+                        maxExpense = line.quantity * line.unitPrice;
                         lowProduct = line.name;
-                        lowProductSum = line.PriceOfOne;
                     }
                 } else {
                         if (topProduct == null) {
                             topProduct = line.name;
                             continue;
                         }
-                        if (maxIncome < line.quantity * line.PriceOfOne) {
-                            maxIncome = line.quantity * line.PriceOfOne;
+                        if (maxIncome < line.quantity * line.unitPrice) {
+                            maxIncome = line.quantity * line.unitPrice;
                             topProduct = line.name;
-                            topProductSum = line.PriceOfOne;
                         }
                     }
             }
-            System.out.println("Самый прибыльный товар: " + topProduct + ", продано на сумму: " + topProductSum);
-            System.out.println("Самая большая трата: " + lowProduct + ", потрачено: " + lowProductSum);
+            System.out.println("Самый прибыльный товар: " + topProduct + ", продано на сумму: " + maxIncome);
+            System.out.println("Самая большая трата: " + lowProduct + ", потрачено: " + maxExpense);
         }
 
     }
@@ -117,7 +113,7 @@ public class MonthlyReportEngine {
             int monthIncomeSum = 0;
             for (MonthTransaction line : monthlyReport.monthData) {
                 if (!line.isExpense) {
-                    int lineIncome = line.quantity * line.PriceOfOne;
+                    int lineIncome = line.quantity * line.unitPrice;
                     monthIncomeSum += lineIncome;
                 }
             }
@@ -134,7 +130,7 @@ public class MonthlyReportEngine {
             int monthExpenseSum = 0;
             for (MonthTransaction line : monthlyReport.monthData) {
                 if (line.isExpense) {
-                    int lineIncome = line.quantity * line.PriceOfOne;
+                    int lineIncome = line.quantity * line.unitPrice;
                     monthExpenseSum += lineIncome;
                 }
             }

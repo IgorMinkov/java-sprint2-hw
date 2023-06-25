@@ -1,6 +1,6 @@
 package model;
 
-public class YearTransaction { // класс для каждой строки списка годовых отчетов
+public class YearTransaction { // класс для строки списка годовых отчетов
 
     public int month;
     public int amount;

@@ -5,7 +5,6 @@ import model.YearTransaction;
 import model.YearlyReport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class YearReportEngine {
     public MyFileReader fileReader = new MyFileReader();
@@ -46,27 +45,37 @@ public class YearReportEngine {
 
     public void calculateProfit(YearlyReport yearReport) { // считает прибыль по каждому месяцу
 
-        HashMap<Integer, Integer> profitPerMonths = new HashMap<>();
+        if (yearReport == null) {
+            System.out.println("годовой отчет пустой");
+            return;
+        }
 
         System.out.println("Данные за 2021 год:");
-        for (int i = 0; i < yearReport.yearsData.size(); i++) {
-            YearTransaction yearTransaction = yearReport.yearsData.get(i);
-            Integer profitPerMonth = profitPerMonths.get(yearTransaction.amount);
-            if (profitPerMonth == null) {
-                profitPerMonth = 0;
+        for (int i = 1; i <= 3; i++) {
+
+        int lineExpense = 0;
+        int expenseNumber = 0;
+        int lineIncome = 0;
+        int incomeNumber = 0;
+        int monthProfit = 0;
+
+        for (YearTransaction line : yearReport.yearsData) {
+            if (line.month == i && line.isExpense) {
+                lineExpense = line.amount;
+                expenseNumber = line.month;
             }
-            if (yearTransaction.isExpense) {
-                profitPerMonth -= yearTransaction.amount;
-            } else {
-                profitPerMonth += yearTransaction.amount;
+            if (line.month == i && !line.isExpense) {
+                lineIncome = line.amount;
+                incomeNumber = line.month;
             }
-            profitPerMonths.put(yearTransaction.month, profitPerMonth);
+        }
+            if (expenseNumber == incomeNumber) {
+                monthProfit = lineIncome - lineExpense;
+            }
+            String monthName = getMonthName(i);
+            System.out.println("Прибыль за " + monthName + ": " + monthProfit);
         }
 
-        for (Integer month : profitPerMonths.keySet()) {
-            String monthName = getMonthName(month);
-            System.out.println("Прибыль за " + monthName + ": " + profitPerMonths.get(month));
-        }
     }
 
     public String getMonthName (int i) { // Получить имя месяца для вывода статистики
@@ -102,6 +111,40 @@ public class YearReportEngine {
         }
         int averageIncome = incomeSum / incomes.size();
         System.out.println("средний доход за год: " + averageIncome);
+    }
+
+    public int calculateYearExpenseSum (YearlyReport yearlyReport, int month) {
+
+        if (yearlyReport == null) {
+            System.out.println("годовой отчет пустой");
+            return 0;
+        }
+
+        int expenseSum = 0;
+        for (YearTransaction line : yearlyReport.yearsData) {
+            if (line.month == month && line.isExpense) {
+                int lineExpense = line.amount;
+                expenseSum += lineExpense;
+            }
+        }
+        return expenseSum;
+    }
+
+    public int calculateYearIncomeSum (YearlyReport yearlyReport, int month) {
+
+        if (yearlyReport == null) {
+            System.out.println("годовой отчет пустой");
+            return 0;
+        }
+
+        int incomeSum = 0;
+        for (YearTransaction line : yearlyReport.yearsData) {
+            if (line.month == month && !line.isExpense) {
+                int lineIncome = line.amount;
+                incomeSum += lineIncome;
+            }
+        }
+        return incomeSum;
     }
 
 }
