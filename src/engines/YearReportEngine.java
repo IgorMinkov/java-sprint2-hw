@@ -1,6 +1,6 @@
 package engines;
 
-import fileReader.MyFileReader;
+import filereader.MyFileReader;
 import model.YearTransaction;
 import model.YearlyReport;
 
@@ -86,6 +86,11 @@ public class YearReportEngine {
 
     public void calculateAverage(YearlyReport yearReport) { // средний доход и средний расход за год
 
+        if (yearReport == null) {
+            System.out.println("годовой отчет пустой");
+            return;
+        }
+
         ArrayList<Integer> expenses = new ArrayList<>();
         ArrayList<Integer> incomes = new ArrayList<>();
 
@@ -99,17 +104,23 @@ public class YearReportEngine {
         }
 
         int expenseSum = 0;
+        int averageExpense = 0;
         for (int expense : expenses) {
             expenseSum += expense;
         }
-        int averageExpense = expenseSum / expenses.size();
+        if (!expenses.isEmpty()) {
+            averageExpense = expenseSum / expenses.size();
+        }
         System.out.println("средний расход за год: " + averageExpense);
 
         int incomeSum = 0;
+        int averageIncome = 0;
         for (int income : incomes) {
             incomeSum += income;
         }
-        int averageIncome = incomeSum / incomes.size();
+        if (!incomes.isEmpty()) {
+            averageIncome = incomeSum / incomes.size();
+        }
         System.out.println("средний доход за год: " + averageIncome);
     }
 

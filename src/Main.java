@@ -25,23 +25,28 @@ public class Main {
             String userInput = scanner.nextLine();
             int intUserInput = Integer.parseInt(userInput);
 
-            if (intUserInput == 1) {
+            switch (intUserInput) {
+                case 1:
                 monthsData = monthlyEngine.readAllMonthlyReports();
-            } else if (intUserInput == 2) {
+                break;
+                case 2:
                 yearReport = yearlyEngine.readYearReport();
-            } else if (intUserInput == 3) {
+                break;
+                case 3:
                 reportCheckEngine.monthsToYearCheck(monthsData, yearReport);
-            } else if (intUserInput == 4) {
+                break;
+                case 4:
                 monthlyEngine.getMonthsStatistic(monthsData);
-            } else if (intUserInput == 5) {
+                break;
+                case 5:
                 yearlyEngine.getYearStatistic(yearReport);
-            }
-            else if (intUserInput == 916) {
+                break;
+                case 0:
                 System.out.println("До новых встреч!");
                 scanner.close();
                 return;
-            } else {
-                System.out.println("Неизвестная команда");
+                default:
+                    System.out.println("Неизвестная команда");
             }
         }
     }
@@ -54,7 +59,7 @@ public class Main {
         System.out.println("3 - Сверить месячные отчёты с годовым");
         System.out.println("4 - Вывести информацию всех месячных отчётов");
         System.out.println("5 - Вывести информацию годового отчёта");
-        System.out.println("Для выхода из приложения наберите 916");
+        System.out.println("Для выхода из приложения наберите 0");
     }
 }
 
